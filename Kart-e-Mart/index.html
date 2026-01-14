@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kart e Mart</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- GUTTER BUTTONS (dentro del espacio blanco, inferiores) -->
+  <button class="btn btn-gutter btn-gutter-left" aria-label="Técnico">
+    <img src="assets/tecnico.png" alt="Técnico" class="gutter-icon">
+  </button>
+
+  <button class="btn btn-gutter btn-gutter-right" aria-label="Búsqueda">
+    <img src="assets/busqueda.png" alt="Búsqueda" class="gutter-icon">
+  </button>
+
+  <!-- EDGE BUTTONS (pegados a los bordes, superiores) -->
+  <button class="btn btn-edge btn-edge-left" aria-label="Configuración global">
+    <img src="assets/configuracion-global.png" alt="Configuración global" class="gutter-icon">
+  </button>
+
+  <button class="btn btn-edge btn-edge-right" aria-label="Configuración usuario">
+    <img src="assets/configuracion-usuario.png" alt="Configuración usuario" class="gutter-icon">
+  </button>
+
+  <div class="container">
+
+    <!-- BANNER -->
+    <section class="banner" aria-label="Banner de productos">
+      <div class="banner-track" id="bannerTrack">
+        <div class="banner-slide slide1" aria-hidden="false"></div>
+        <div class="banner-slide slide2" aria-hidden="true"></div>
+        <div class="banner-slide slide3" aria-hidden="true"></div>
+        <div class="banner-slide slide4" aria-hidden="true"></div>
+        <div class="banner-slide slide5" aria-hidden="true"></div>
+      </div>
+      <button class="banner-nav left" id="bannerPrev" aria-label="Banner anterior">‹</button>
+      <button class="banner-nav right" id="bannerNext" aria-label="Banner siguiente">›</button>
+    </section>
+
+    <!-- CARRUSEL HORIZONTAL (inicia desde el primer slot a la izquierda) -->
+    <section class="horizontal-section" aria-label="Categorías">
+      <h2 class="section-title">Categorías</h2>
+
+      <div class="carousel-wrapper">
+        <button class="nav-btn left" id="leftBtn" aria-label="Desplazar izquierda">◀</button>
+
+        <div class="horizontal-carousel" id="horizontalCarousel" tabindex="0" aria-roledescription="carousel">
+          <div class="icon-card"><div class="icon-card-content">📱</div><div class="icon-label">Móviles</div></div>
+          <div class="icon-card"><div class="icon-card-content">💻</div><div class="icon-label">Tecnologia</div></div>
+          <div class="icon-card"><div class="icon-card-content">🎧</div><div class="icon-label">Musica</div></div>
+          <div class="icon-card"><div class="icon-card-content">⌚</div><div class="icon-label">Relojes</div></div>
+          <div class="icon-card"><div class="icon-card-content">📷</div><div class="icon-label">Fotografia</div></div>
+          <div class="icon-card"><div class="icon-card-content">🖥️</div><div class="icon-label">Periféricos</div></div>
+          <div class="icon-card"><div class="icon-card-content">🎮</div><div class="icon-label">Video Juegos</div></div>
+          <div class="icon-card"><div class="icon-card-content">🔊</div><div class="icon-label">Discos</div></div>
+          <div class="icon-card"><div class="icon-card-content">🧭</div><div class="icon-label">Polulares</div></div>
+          <div class="icon-card"><div class="icon-card-content">🛒</div><div class="icon-label">Ofertas</div></div>
+        </div>
+
+        <button class="nav-btn right" id="rightBtn" aria-label="Desplazar derecha">▶</button>
+      </div>
+    </section>
+
+    <!-- GRID VERTICAL -->
+    <section class="vertical-section" aria-label="Productos destacados">
+      <h2 class="section-title">Destacados</h2>
+
+      <div class="vertical-grid" id="verticalGrid">
+        <div class="grid-item">📱<span class="item-label">Smart</span></div>
+        <div class="grid-item">💻<span class="item-label">Laptop</span></div>
+        <div class="grid-item">🎧<span class="item-label">Audífonos</span></div>
+        <div class="grid-item">🎮<span class="item-label">Consola</span></div>
+        <div class="grid-item">⌚<span class="item-label">Reloj</span></div>
+        <div class="grid-item">📷<span class="item-label">Cámara</span></div>
+        <div class="grid-item">🖥️<span class="item-label">Monitor</span></div>
+        <div class="grid-item">🔊<span class="item-label">Parlantes</span></div>
+        <div class="grid-item">🖨️<span class="item-label">Impresora</span></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- LEFT SIDE PANEL: Configuración Global (Soporte eliminado; GIF agregado) -->
+  <div id="sidePanel" class="side-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sidePanelTitle">
+    <div class="side-panel-header">
+      <h3 id="sidePanelTitle">Configuración Global</h3>
+      <button id="sidePanelClose" class="side-panel-close" aria-label="Cerrar panel">✕</button>
+    </div>
+
+    <nav class="side-panel-body" aria-label="Opciones de configuración global">
+      <ul class="panel-list">
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="g-submenu-1" aria-expanded="false">Cuenta</button>
+          <div id="g-submenu-1" class="submenu" aria-hidden="true">
+            <button class="submenu-item">Perfil</button>
+            <button class="submenu-item">Seguridad</button>
+            <button class="submenu-item">Notificaciones</button>
+          </div>
+        </li>
+
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="g-submenu-2" aria-expanded="false">Preferencias</button>
+          <div id="g-submenu-2" class="submenu" aria-hidden="true">
+            <button class="submenu-item">Tema</button>
+            <button class="submenu-item">Idioma</button>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    <!-- GIF decorativo (no participa en animación de submenus) -->
+    <div class="panel-gif" aria-hidden="true">
+      <img src="assets/g1.gif" alt="Ilustración decorativa">
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE PANEL: Configuración Usuario (GIF agregado) -->
+  <div id="userPanel" class="user-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="userPanelTitle">
+    <div class="user-panel-header">
+      <h3 id="userPanelTitle">Configuración Usuario</h3>
+      <button id="userPanelClose" class="user-panel-close" aria-label="Cerrar panel">✕</button>
+    </div>
+
+    <nav class="user-panel-body" aria-label="Opciones de usuario">
+      <ul class="panel-list">
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="u-submenu-1" aria-expanded="false">Mi cuenta</button>
+          <div id="u-submenu-1" class="submenu" aria-hidden="true">
+            <button class="submenu-item">Perfil</button>
+            <button class="submenu-item">Preferencias personales</button>
+          </div>
+        </li>
+
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="u-submenu-2" aria-expanded="false">Privacidad</button>
+          <div id="u-submenu-2" class="submenu" aria-hidden="true">
+            <button class="submenu-item">Contraseñas</button>
+            <button class="submenu-item">Sesiones</button>
+          </div>
+        </li>
+
+        <li class="panel-item">
+          <button class="panel-action" id="panelSignOut">Cerrar sesión</button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- GIF decorativo -->
+    <div class="panel-gif" aria-hidden="true">
+      <img src="assets/g2.gif" alt="Ilustración decorativa">
+    </div>
+  </div>
+
+  <!-- BOTTOM PANEL: Técnico (sale desde abajo, empuja contenido hacia arriba; altura aumentada) -->
+  <div id="techPanel" class="bottom-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="techPanelTitle">
+    <div class="bottom-panel-header">
+      <h3 id="techPanelTitle">Técnico</h3>
+      <button id="techPanelClose" class="bottom-panel-close" aria-label="Cerrar técnico">✕</button>
+    </div>
+
+    <nav class="bottom-panel-body" aria-label="Opciones técnico">
+      <ul class="panel-list">
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="t-submenu-1" aria-expanded="false">Numeros Telefónicos</button>
+          <div id="t-submenu-1" class="submenu" aria-hidden="true">
+            <button class="submenu-item">77121231321</button>
+            <button class="submenu-item">12323131111</button>
+          </div>
+        </li>
+
+        <li class="panel-item">
+          <button class="panel-btn" data-submenu="t-submenu-2" aria-expanded="false">Terminos de usos y servicios</button>
+          <div id="t-submenu-2" class="submenu" aria-hidden="true">
+            <button class="submenu-item">MENEA TU CHAPA TU CHAPA TU CHAPA TU CHAPA TU CHAPA</button>
+            <button class="submenu-item">TU CHAPA TU CHAPA EEEEEEEEEEEEEE</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- TOP PANEL: Búsqueda (sale desde arriba, 40vh, NO desplaza container).
+       Reemplacé las opciones por un formulario funcional (sin conexión real) -->
+  <div id="searchPanel" class="top-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="searchPanelTitle">
+    <div class="top-panel-header">
+      <h3 id="searchPanelTitle">Búsqueda rápida</h3>
+      <button id="searchPanelClose" class="top-panel-close" aria-label="Cerrar búsqueda">✕</button>
+    </div>
+
+    <div class="top-panel-body" aria-label="Formulario de búsqueda">
+      <form id="searchForm" class="search-form" onsubmit="return false;">
+
+        <input id="searchInput" type="search" placeholder="Escribe el nombre del producto..." />
+
+        <label for="searchCategory">Categoría</label>
+        <select id="searchCategory">
+          <option value="">Todas</option>
+          <option value="moviles">Móviles</option>
+          <option value="tecnologia">Tecnología</option>
+          <option value="audio">Audio</option>
+          <option value="gaming">Video Juegos</option>
+        </select>
+
+        <div class="price-row">
+          <div>
+            <label for="searchPriceMin">Precio min</label>
+            <input id="searchPriceMin" type="number" min="0" placeholder="0" />
+          </div>
+          <div>
+            <label for="searchPriceMax">Precio max</label>
+            <input id="searchPriceMax" type="number" min="0" placeholder="9999" />
+          </div>
+        </div>
+
+        <div class="search-row">
+          <label><input id="searchOffers" type="checkbox" /> Solo ofertas</label>
+          <label><input id="searchInStock" type="checkbox" checked /> En stock</label>
+        </div>
+
+        <div class="search-actions">
+          <button id="searchBtn" type="button">Buscar</button>
+          <button id="searchClear" type="button">Limpiar</button>
+        </div>
+
+        <div id="searchHint" class="search-hint" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Overlay que bloquea el contenido -->
+  <div id="panelOverlay" class="panel-overlay" tabindex="-1" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
