@@ -10,6 +10,7 @@
   --gutter-offset: 6px;
 
   --btn-size: 56px;
+  --btn-gap: 12px;
 
   /* panel sizes */
   --side-panel-width: 25vw;
@@ -39,10 +40,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; heig
 /* Layout principal */
 .container{max-width:var(--container-w);margin:24px auto;padding:12px; transition: transform 420ms var(--side-panel-ease); will-change: transform;}
 .section-title{font-size:1.05rem;margin:8px 6px 14px;color:var(--gris-oscuro)}
-/* BANNER */
-.banner{position:relative;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px rgba(46,46,46,0.08);margin-bottom:28px}
-.banner-track{display:flex;transition:transform 0.8s cubic-bezier(.2,.9,.2,1);will-change:transform}
-.banner-slide{flex:0 0 100%;height:260px}
+
+/* BANNER: fijamos tamaño para que sea idéntico en todos los devices */
+.banner{position:relative;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px rgba(46,46,46,0.08);margin-bottom:28px;height:260px}
+.banner-track{display:flex;transition:transform 0.8s cubic-bezier(.2,.9,.2,1);will-change:transform;height:100%}
+.banner-slide{flex:0 0 100%;min-width:100%;width:100%;height:100%}
 .slide1{background:linear-gradient(135deg,#c9a66b,#b5894a)}
 .slide2{background:linear-gradient(135deg,#9c8c7c,#7f6f66)}
 .slide3{background:linear-gradient(135deg,#b07d62,#8f5d3c)}
@@ -141,22 +143,15 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; heig
   );
 }
 
-/* EDGE BUTTONS */
+/* EDGE BUTTONS (desktop) */
 .btn-edge{ top:12px; }
 .btn-edge-left{ left: 8px; }
 .btn-edge-right{ right: 8px; }
 
-/* Ocultar gutter buttons si el layout no tiene gutter (viewport pequeño) */
-@media (max-width: 1100px) {
-  .btn-gutter { display:none; }
-}
-
-/* Ajustes responsive para botones */
+/* Ajustes responsive para botones (desktop remain) */
 @media (max-width:720px){
-  :root { --btn-size:48px; }
-  .btn { font-size:1.25rem; }
-  .btn-edge { top:8px; }
-  .btn-gutter { bottom:16px }
+  :root { --btn-size:56px; --btn-gap:12px; }
+  .btn { font-size:1.15rem; top:auto; bottom:12px; } /* reset top for mobile; we'll position them below */
 }
 
 .gutter-icon { width: 40px; height: 40px; pointer-events: none; }
@@ -234,8 +229,6 @@ body.panel-open-right .user-panel { transform: translateX(0); opacity:1; }
 .user-panel-close { border:0; background:transparent; font-size:1.05rem; cursor:pointer; padding:8px; border-radius:8px; }
 
 .user-panel-body { padding:12px; overflow:auto; flex:1; padding-bottom:140px; }
-
-/* GIF for user panel uses same class .panel-gif */
 
 /* ------------------ BOTTOM PANEL (TÉCNICO) ------------------ */
 .bottom-panel {
@@ -315,7 +308,22 @@ body.panel-open-top .panel-overlay {
   pointer-events: auto;
 }
 
-/* esconder otros botones cuando un panel esté abierto */
+/* ------------------------------------------------------------------
+   HIDE OTHER BUTTONS when a panel is open - CSS-driven (robust)
+   This avoids toggling per-element classes in JS and prevents
+   inconsistent states. The exception is the opener button which stays visible.
+   ------------------------------------------------------------------ */
+body.panel-open-left .btn:not(.btn-edge-left) ,
+body.panel-open-right .btn:not(.btn-edge-right),
+body.panel-open-bottom .btn:not(.btn-gutter-left),
+body.panel-open-top .btn:not(.btn-gutter-right) {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.92) translateY(8px);
+  transition: opacity 220ms var(--side-panel-ease), transform 220ms var(--side-panel-ease);
+}
+
+/* esconder otros botones cuando un panel esté abierto (compatibilidad) */
 .hidden-by-panel {
   opacity: 0 !important;
   transform: scale(.92) translateY(8px);
@@ -342,11 +350,53 @@ body.panel-open-bottom .container { transform: translateY(calc(-1 * var(--bottom
 .search-actions button{padding:8px 12px;border-radius:10px;border:0;background:var(--gris-oscuro);color:var(--beige);cursor:pointer}
 .search-actions button[type="button"]#searchClear{background:transparent;color:var(--gris-oscuro);border:1px solid rgba(0,0,0,0.06)}
 .search-hint{margin-top:8px;font-size:.88rem;color:var(--gris-medio)}
-/* para UX móvil */
+
+/* ================= Mobile layout: move all 4 corner buttons to bottom and adapt slots ================= */
 @media (max-width: 720px) {
-  :root { --side-panel-width: 78vw; --user-panel-width: 78vw; --bottom-panel-height: 40vh; --top-panel-height: 48vh; }
-  body.panel-open-left .container,
-  body.panel-open-right .container { transform: translateX(calc(var(--side-panel-width))); }
+  :root { --side-panel-width: 78vw; --user-panel-width: 78vw; --bottom-panel-height: 40vh; --top-panel-height: 48vh; --btn-size:56px; --btn-gap:12px; }
+
+  /* Put all four buttons in a centered row at bottom (calculated offsets using var sizes) */
+  .btn { width: var(--btn-size); height: var(--btn-size); bottom: 12px; top: auto; position: fixed; border-radius:12px; z-index:1300; }
+
+  /* offsets around center using btn-size and btn-gap (keeps perfect centering regardless of btn-size) */
+  .btn-edge-left  { left: calc(50% - (var(--btn-size) * 1.5) - (var(--btn-gap) * 1)); }
+  .btn-gutter-left{ left: calc(50% - (var(--btn-size) * 0.5) - (var(--btn-gap) * 0)); }
+  .btn-gutter-right{ left: calc(50% + (var(--btn-size) * 0.5) + (var(--btn-gap) * 0)); }
+  .btn-edge-right { left: calc(50% + (var(--btn-size) * 1.5) + (var(--btn-gap) * 1)); }
+
+  /* touch target improvements */
+  .btn { box-shadow:0 10px 26px rgba(0,0,0,0.14); }
+
+  /* Ensure hidden-by-panel still works visually (compat) */
+  .hidden-by-panel { opacity: 0 !important; transform: translateY(6px) scale(.96); }
+
+  /* Adjust container transforms when bottom panel opens (uses bottom panel height) */
   body.panel-open-bottom .container { transform: translateY(calc(-1 * var(--bottom-panel-height))); }
+
+  /* mobile panel-gif size */
   .panel-gif { max-width: calc(78vw - 32px); }
+
+  /* Make category slots larger and more touch friendly */
+  .icon-card{
+    flex:0 0 calc((100% - (3 * 12px)) / 3); /* show ~3 per viewport for better touch targets */
+    border-radius:10px;
+    min-width: 28%;
+  }
+  .icon-card-content { font-size:1.6rem; }
+  .icon-label { font-size:0.72rem; bottom:6px; }
+
+  /* reduce banner nav overlap */
+  .banner-nav { width:40px; height:40px; font-size:1.4rem; }
+}
+
+/* Very small screens adjustments */
+@media (max-width: 480px) {
+  .btn-edge-left { left: calc(50% - (var(--btn-size) * 1.45) - 10px); }
+  .btn-edge-right { left: calc(50% + (var(--btn-size) * 1.45) + 10px); }
+  .btn-gutter-left { left: calc(50% - (var(--btn-size) * 0.45)); }
+  .btn-gutter-right { left: calc(50% + (var(--btn-size) * 0.45)); }
+
+  .vertical-grid { grid-template-columns: repeat(2,1fr); }
+  .icon-card{ flex:0 0 calc((100% - (2 * 12px)) / 2); min-width: 44%; }
+  .icon-card-content { font-size:1.4rem; }
 }

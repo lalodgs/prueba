@@ -330,7 +330,7 @@ document.querySelectorAll('.grid-item').forEach(item => {
   const searchClear = document.getElementById('searchClear');
   const searchHint = document.getElementById('searchHint');
 
-  // todos los botones fijos (gutter + edge) que vamos a ocultar al abrir panel
+  // todos los botones fijos (gutter + edge) - ya no manipulamos su visibilidad individualmente
   const allBtns = Array.from(document.querySelectorAll('.btn'));
 
   // seguridad
@@ -357,7 +357,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
     if (!leftPanel) return;
     closeAnyOpenPanel();
     previouslyFocused = document.activeElement;
-    allBtns.forEach(b => { if (b !== leftOpenBtn) b.classList.add('hidden-by-panel'); });
     body.classList.add('panel-open-left');
     leftPanel.setAttribute('aria-hidden','false');
     overlay.setAttribute('aria-hidden','false');
@@ -370,7 +369,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
   }
   function closeLeftPanel() {
     if (!leftPanel) return;
-    allBtns.forEach(b => b.classList.remove('hidden-by-panel'));
     body.classList.remove('panel-open-left');
     leftPanel.setAttribute('aria-hidden','true');
     overlay.setAttribute('aria-hidden','true');
@@ -403,7 +401,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
     if (!rightPanel) return;
     closeAnyOpenPanel();
     previouslyFocused = document.activeElement;
-    allBtns.forEach(b => { if (b !== rightOpenBtn) b.classList.add('hidden-by-panel'); });
     body.classList.add('panel-open-right');
     rightPanel.setAttribute('aria-hidden','false');
     overlay.setAttribute('aria-hidden','false');
@@ -416,7 +413,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
   }
   function closeRightPanel() {
     if (!rightPanel) return;
-    allBtns.forEach(b => b.classList.remove('hidden-by-panel'));
     body.classList.remove('panel-open-right');
     rightPanel.setAttribute('aria-hidden','true');
     overlay.setAttribute('aria-hidden','true');
@@ -449,7 +445,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
     if (!bottomPanel) return;
     closeAnyOpenPanel();
     previouslyFocused = document.activeElement;
-    allBtns.forEach(b => { if (b !== bottomOpenBtn) b.classList.add('hidden-by-panel'); });
     body.classList.add('panel-open-bottom');
     bottomPanel.setAttribute('aria-hidden','false');
     overlay.setAttribute('aria-hidden','false');
@@ -462,7 +457,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
   }
   function closeBottomPanel() {
     if (!bottomPanel) return;
-    allBtns.forEach(b => b.classList.remove('hidden-by-panel'));
     body.classList.remove('panel-open-bottom');
     bottomPanel.setAttribute('aria-hidden','true');
     overlay.setAttribute('aria-hidden','true');
@@ -495,7 +489,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
     if (!topPanel) return;
     closeAnyOpenPanel();
     previouslyFocused = document.activeElement;
-    allBtns.forEach(b => { if (b !== topOpenBtn) b.classList.add('hidden-by-panel'); });
     body.classList.add('panel-open-top');
     topPanel.setAttribute('aria-hidden','false');
     overlay.setAttribute('aria-hidden','false');
@@ -508,7 +501,6 @@ document.querySelectorAll('.grid-item').forEach(item => {
   }
   function closeTopPanel() {
     if (!topPanel) return;
-    allBtns.forEach(b => b.classList.remove('hidden-by-panel'));
     body.classList.remove('panel-open-top');
     topPanel.setAttribute('aria-hidden','true');
     overlay.setAttribute('aria-hidden','true');
